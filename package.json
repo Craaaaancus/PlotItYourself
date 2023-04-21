@@ -1,0 +1,20 @@
+{
+  "name": "plot-it-yourself",
+  "version": "1.0.0",
+  "description": "",
+  "main": "PlotItYourself.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Plot-it-yourself/PlotItYourself.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Craaaaancus/PlotItYourself.git"
+  },
+  "author": "Denis Gritskov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Craaaaancus/PlotItYourself/issues"
+  },
+  "homepage": "https://github.com/Craaaaancus/PlotItYourself#readme"
+}

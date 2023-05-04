@@ -15,15 +15,20 @@ class CPlayer {
       playerHistory.step = i
       playerHistory.typeMove = '*'
       playerHistory.moveResult = '*'
+      playerHistory.position = -1
       playerHistory.txt = this.playerTxt
       this.playerHistory[i] = playerHistory
     }
-    this.errorMessage = 'MaxStep exceeded'
+    this.maxStepExceedMessage = 'MaxStep exceeded'
+    this.invalidParameterMessage = 'Incorrect input parameters'
   }
 
   getChar(index){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
+    }
+    if (typeof index !== 'number') {
+      throw new Error(this.invalidParameterMessage)
     }
 
     let char
@@ -32,10 +37,12 @@ class CPlayer {
     this.playerHistory[this.playerStep].typeMove = 'G'
     if (index < 0 || index > this.playerTxt.length){
       this.playerHistory[this.playerStep].moveResult = 'O'
+      this.playerHistory[this.playerStep].position = -1
       char = ' '
     }
     else {
       this.playerHistory[this.playerStep].moveResult = 'N'
+      this.playerHistory[this.playerStep].position = index
       char = this.playerTxt[index]
     }
 
@@ -45,7 +52,13 @@ class CPlayer {
 
   setChar(index, char){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
+    }
+    if (typeof index !== 'number') {
+      throw new Error(this.invalidParameterMessage)
+    }
+    if (typeof char !== 'string' || char?.length !== 1){
+      throw new Error(this.invalidParameterMessage)
     }
 
     this.playerStep++
@@ -54,9 +67,11 @@ class CPlayer {
 
     if (index < 0 || index >= this.playerTxt.length){
       this.playerHistory[this.playerStep].moveResult = 'O'
+      this.playerHistory[this.playerStep].position = -1
     }
     else {
       this.playerHistory[this.playerStep].moveResult = 'N'
+      this.playerHistory[this.playerStep].position = index
       let substr1 = this.playerTxt.slice(0, index)
       let substr2 = this.playerTxt.slice(index+1)
       this.playerTxt = substr1 + char + substr2
@@ -67,7 +82,13 @@ class CPlayer {
 
   delChars(index, count){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
+    }
+    if (typeof index !== 'number' || typeof count !== 'number') {
+      throw new Error(this.invalidParameterMessage)
+    }
+    if (count < 0){
+      throw new Error(this.invalidParameterMessage)
     }
 
     this.playerStep++
@@ -75,9 +96,11 @@ class CPlayer {
     this.playerHistory[this.playerStep].typeMove = 'D'
     if (index < 0 || index >= this.playerTxt.length){
       this.playerHistory[this.playerStep].moveResult = 'O'
+      this.playerHistory[this.playerStep].position = -1
     }
     else {
       this.playerHistory[this.playerStep].moveResult = 'N'
+      this.playerHistory[this.playerStep].position = index
       let substr1 = this.playerTxt.slice(0, index)
       let substr2 = this.playerTxt.slice(index+count)
       this.playerTxt = substr1 + substr2
@@ -88,7 +111,13 @@ class CPlayer {
 
   insChar(index, char){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
+    }
+    if (typeof index !== 'number') {
+      throw new Error(this.invalidParameterMessage)
+    }
+    if (typeof char !== 'string' || char?.length !== 1){
+      throw new Error(this.invalidParameterMessage)
     }
 
     this.playerStep++
@@ -96,9 +125,11 @@ class CPlayer {
     this.playerHistory[this.playerStep].typeMove = 'I'
     if (index < 0 || index > this.playerTxt.length){
       this.playerHistory[this.playerStep].moveResult = 'O'
+      this.playerHistory[this.playerStep].position = -1
     }
     else {
       this.playerHistory[this.playerStep].moveResult = 'N'
+      this.playerHistory[this.playerStep].position = index
       let substr1 = this.playerTxt.slice(0, index)
       let substr2 = this.playerTxt.slice(index)
       this.playerTxt = substr1 + char + substr2
@@ -109,7 +140,10 @@ class CPlayer {
 
   findStr(string){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
+    }
+    if (typeof string !== 'string'){
+      throw new Error(this.invalidParameterMessage)
     }
 
     this.playerStep++
@@ -119,9 +153,11 @@ class CPlayer {
     let findIndex = this.playerTxt.indexOf(string)
     if (findIndex === -1) {
       this.playerHistory[this.playerStep].moveResult = 'F'
+      this.playerHistory[this.playerStep].position = -1
     }
     else {
       this.playerHistory[this.playerStep].moveResult = 'N'
+      this.playerHistory[this.playerStep].position = findIndex
     }
     this.playerHistory[this.playerStep].txt = this.playerTxt
     return findIndex
@@ -129,13 +165,14 @@ class CPlayer {
 
   lenTxt(){
     if (this.playerStep > this.maxSteps){
-      throw new MaxStepExceedError(this.errorMessage)
+      throw new MaxStepExceedError(this.maxStepExceedMessage)
     }
 
     this.playerStep++
     this.playerHistory[this.playerStep].step = this.playerStep
     this.playerHistory[this.playerStep].typeMove = 'L'
     this.playerHistory[this.playerStep].moveResult = 'N'
+    this.playerHistory[this.playerStep].position = -1
     this.playerHistory[this.playerStep].txt = this.playerTxt
 
     return this.playerTxt.length

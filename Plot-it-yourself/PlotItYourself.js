@@ -145,6 +145,7 @@ function start(){
     
     setWinner()
     printResults()
+    myTypes.setWinner(winner)
     myTypes.outputLog(pathToOutput)
     console.log('\n************** The End\n')
   })

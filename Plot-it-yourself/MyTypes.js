@@ -58,6 +58,10 @@ class MyTypes {
     this.sourceText = inputData[7].trim()
   }
 
+  setWinner(winner){
+    this.winner = winner
+  }
+
   insertRandomSpaces(){
     let i = 0
     while(i < this.sourceText.length - 1){
@@ -82,6 +86,7 @@ class MyTypes {
       history.step = 0
       history.typeMove = 'N'
       history.moveResult = 'N'
+      history.position = -1
       history.txt = this.sourceText
       this.players[i].setPlayerHistory(0, history)
       for (let j = 1; j < this.maxNumberOfSteps; j++){
@@ -89,6 +94,7 @@ class MyTypes {
         history.step = j
         history.typeMove = '*'
         history.moveResult = '*'
+        history.position = -1
         history.txt = ''
         this.players[i].setPlayerHistory(j, history)
       }
@@ -103,6 +109,10 @@ class MyTypes {
     const writeLine = (line) => writeStream.write(`${line}\n`)
 
     writeLine(this.separator)
+    if (this.winner) writeLine(
+      `${this.winner[0]} ${this.winner[1]} ${this.winner[2]}`
+    )
+    else writeLine(`${0} ${0} ${0}`)
     writeLine(
       `${this.players[0].getPlayerId()} ${this.players[1].getPlayerId()}`
     )
@@ -121,6 +131,7 @@ class MyTypes {
     writeLine(
       `${this.sourceText.length} ${this.targetText.length}`
     )
+    writeLine(this.numberOfTask)
     writeLine(
       `${this.sourceText}`
     )
@@ -136,10 +147,11 @@ class MyTypes {
     for (let i = 0; i < this.maxNumberOfSteps; i++){
       for (let j = 0; j < this.NUsers; j++){
         if (i <= this.players[j].getPlayerStep()){
-          let step = this.players[j].playerHistory[i].step
-          let typeMove = this.players[j].playerHistory[i].typeMove
-          let moveResult = this.players[j].playerHistory[i].moveResult
-          writeLine(`${j+1} ${step} ${typeMove} ${moveResult}`)
+          const step = this.players[j].playerHistory[i].step
+          const typeMove = this.players[j].playerHistory[i].typeMove
+          const moveResult = this.players[j].playerHistory[i].moveResult
+          const position = this.players[j].playerHistory[i].position
+          writeLine(`${j+1} ${step} ${typeMove} ${moveResult} ${position}`)
           writeLine(this.players[j].playerHistory[i].txt)
         }
       }

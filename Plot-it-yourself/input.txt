@@ -4,5 +4,5 @@
 Yura      
 Michelle               
 5000                  //MaxSteps - Max number of steps
-1                     //NoTask - номер задачи
+2                     //NoTask - номер задачи
 the The He picked up his a book, opened to the page marked with the A strip, and take his eyes from the pathege. As he did so, the phone rang The A.
